@@ -73,7 +73,7 @@ uniq_df.to_csv(csv_file, index=False)
 # Create plots
 
 # Set Seaborn style and context
-sns.set(style='whitegrid', font='Arial', rc={"axes.labelsize": 14, "xtick.labelsize": 12, "ytick.labelsize": 12})
+sns.set(style='whitegrid', rc={"axes.labelsize": 14, "xtick.labelsize": 12, "ytick.labelsize": 12})
 
 # Create a figure with subplots
 plt.figure(figsize=(12, 8))
