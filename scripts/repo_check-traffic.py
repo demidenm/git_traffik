@@ -65,7 +65,10 @@ merged_viewsclones = merged_viewsclones.fillna(0)
 concatenated_df = pd.concat([traffic_df, merged_viewsclones], ignore_index=True)
 concatenated_df['timestamp'] = concatenated_df['timestamp'].astype(str).str.split(' ').str[0]
 uniq_df = concatenated_df.drop_duplicates(subset=['timestamp'])
+
+print(f"Saving CSV to: {csv_file}")
 uniq_df.to_csv(csv_file, index=False)
+
 
 # Create plots
 
@@ -97,5 +100,6 @@ plt.legend()
 
 # Save plot
 plt.tight_layout()
+print(f"Saving plot to: {os.path.join(output_dir, f'{repo}_traffic-data.png')}")
 plt.savefig(os.path.join(output_dir, f'{repo}_traffic-data.png'), dpi=300)
 plt.close()
