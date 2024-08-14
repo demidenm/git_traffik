@@ -100,6 +100,11 @@ plt.legend()
 
 # Save plot
 plt.tight_layout()
-print(f"Saving plot to: {os.path.join(output_dir, f'{repo}_traffic-data.png')}")
-plt.savefig(os.path.join(output_dir, f'{repo}_traffic-data.png'), dpi=300)
+plot_path = os.path.join(output_dir, f'{repo}_traffic-data.png')
+plt.savefig(plot_path, dpi=300)
 plt.close()
+
+if os.path.exists(plot_path):
+    print(f"File saved successfully: {plot_path}")
+else:
+    print(f"File not saved: {plot_path}")
