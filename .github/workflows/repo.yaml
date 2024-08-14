@@ -23,7 +23,7 @@ jobs:
         pip install requests pandas matplotlib seaborn
 
     - name: Run script
-      working-directory: ./script  # Set working directory
+      working-directory: ./scripts  # Set working directory
       env:
         OWNER: 'demidenm'  # GitHub repo owner
         REPO: 'PyReliMRI'  # GitHub repo name
