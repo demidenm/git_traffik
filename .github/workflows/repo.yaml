@@ -23,9 +23,10 @@ jobs:
         pip install requests pandas matplotlib seaborn
 
     - name: Run script
+      working-directory: ./script  # Set working directory
       env:
         OWNER: 'demidenm'  # GitHub repo owner
         REPO: 'PyReliMRI'  # GitHub repo name
         MY_ACCESS_TOKEN: ${{ secrets.REPO_A_ACCESS_TOKEN }} # Settings -> Secrets and variables -> Actions -> New Repository secret
       run: |
-        python script/repo_check-traffic.py
+        python repo_check-traffic.py
