@@ -41,12 +41,16 @@ Created a small package that I wanted to observe the fluctations in use. Helps m
 I should consider maintaining and expanding it. Unfortunately, discovered very quickly that the first 4-5 months of data were lost. Needed something \
 more consistent.
 
-Essentials:
+Essentials to update in [repo.yaml](.github/workflows/repo.yaml): These are called as variables into .py code to use with api.
 
 - OWNER: update the github repository owner to your name or whoever has access that granted you repo privileges
-- REPO: update the repository name, in my cas e it is PyReliMRI
+- REPO: update the repository name, in my case it is PyReliMRI. 
 - MY_ACCESS_TOKEN: This is the taken to access the data, it needs to be private. In repo_trafficplots repo, in Settings --> Secrets & Variables --> Actions I created a [New Repository Secret](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) with my Personal Token. You can create one for yourself by following the [instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token)
 
 Once this is setup, the Actions are setup via an event trigger (cron details). You can review all runs and the associated logs. When \
 the figures are created, they are updated in [./output/](./output). The figure below is compiled based on the [running data](./output/PyReliMRI_git-trafficdata.csv)
 
+Note: 
+
+1. For the code to work, the token should have repo privileges.
+2. For code to run, the repo where actions are being performed (e.g. rep_trafficplots) in Settings --> Actions --> General --> Workflow Permissions: _Read and write permissions_
