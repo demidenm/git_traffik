@@ -14,22 +14,34 @@ Includes fields for repository name [`REPO`], repository owner [`OWNER`], and th
 The token provides read/write/pull/push access to the repository [`MY_ACCESS_TOKEN`]. The token is stored as a [SECRET KEY](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) for security.
 
 To run, clone this repository and update the `.github/workflows/repo.yaml` file with your information, then monitor the actions.  
-![repo info location](./images/repo_info.png)
+<div style="text-align: center;">
+  <img src="./images/repo_info.png" alt="repo info location" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
 
 You can, at any time, manually trigger the workflow.  
-![Workflow actions example](./images/git_actions.png)
+<div style="text-align: center;">
+  <img src="./images/git_actions.png" alt="Workflow actions example" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
 
 You can also modify the [cron schedule](https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html).  
-![cron schedule](./images/cron_schedule.png)
+<div style="text-align: center;">
+  <img src="./images/cron_schedule.png" alt="cron schedule" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
 
 When a workflow is completed, it will indicate this with a green checkmark. You can review the steps within it for specific details. Set up some manual and automated (timed) tests to ensure everything is working.  
-![Workflow complete example](./images/workflow_completion.png)
+<div style="text-align: center;">
+  <img src="./images/workflow_completion.png" alt="Workflow complete example" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
 
 The results will then be populated in the `./git_traffik/output` folder for the given repo in .csv and .png formats.  
-![results output example](./images/results_example.png)
+<div style="text-align: center;">
+  <img src="./images/results_example.png" alt="results output example" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
 
 You can download and/or view the compiled data in the .csv file or as an image:  
-![Example PyReliMRI Traffic Data Plot](./git_traffik/output/PyReliMRI_traffic-data.png)
+<div style="text-align: center;">
+  <img src="./git_traffik/output/PyReliMRI_traffic-data.png" alt="Example PyReliMRI Traffic Data Plot" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
 
 **Note:**
 
@@ -39,8 +51,13 @@ You can download and/or view the compiled data in the .csv file or as an image:
 ### 2. Running it within your package/software repo
 
 To run `git_traffik` within your package repo, copy the `git_traffik` folder to the root directory and place the `.github/workflows/repo.yaml` file in your `.github/workflows` folder. As with #1, update the repo details in the .yaml file and insert the two secret keys with your personal token.  
-![repo info location](./images/repo_info.png)  
-![git token info](./images/git_token.png)
+<div style="text-align: center;">
+  <img src="./images/repo_info.png" alt="repo info location" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
+<div style="text-align: center;">
+  <img src="./images/git_token.png" alt="git token info" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
+
 
 **Note:**
 
@@ -49,8 +66,11 @@ To run `git_traffik` within your package repo, copy the `git_traffik` folder to 
 
 ### 3. Running it locally on your machine
 
-To run it locally, you will only need the [./git_traffik/repo_check_traffic.py](./git_traffik/repo_check_traffic.py) script. Since it is running locally, you can avoid secret keys, but you will still need a [personal token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with repo permissions. Update the owner, repo, and token information with your own:  
-![local run updates](./images/git-traffik_local.png)
+To run it locally, you will only need the [./git_traffik/repo_check_traffic.py](./git_traffik/repo_check_traffic.py) script. Since it is running locally, you can avoid secret keys, but you will still need a [personal token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with repo permissions. Update the owner, repo, and token information with your own:
+
+<div style="text-align: center;">
+  <img src="./images/git-traffik_local.png" alt="local run updates" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+</div>
 
 Then, either run the Python script to generate the data or write a bash script to call the Python code. If your machine is on most days of the week, you can set a schedule using [crontab](https://phoenixnap.com/kb/cron-job-mac) to run it on a set schedule. Test to ensure it works.
 
