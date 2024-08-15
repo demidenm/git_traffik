@@ -49,6 +49,10 @@ jobs:
       run: |
         git status
 
+    - name: Check staged files
+      run: |
+        git diff --cached
+
     - name: Add files
       run: |
         git add output/*
