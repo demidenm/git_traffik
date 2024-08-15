@@ -55,13 +55,14 @@ clones_df = pd.DataFrame(clones_data['clones'])
 clones_df['timestamp'] = pd.to_datetime(clones_df['timestamp'])
 clones_df = clones_df.rename(columns={'count': 'clones_count', 'uniques': 'clones_uniques'})
 
-# create date full range, so if git has zeros for clones/views, it retains those as zeros 
+# create date full range, so if git has zeros for clones/views, it retains those as zeros
 start_date = min(views_df['timestamp'].min(), clones_df['timestamp'].min()).tz_convert('UTC')
 end_date = pd.Timestamp.now(tz='UTC')
 full_date_range = pd.date_range(start=start_date, end=end_date)
 
 # Create a DataFrame with the full date range
 date_df = pd.DataFrame({'timestamp': full_date_range})
+date_df = date_df.sort_values(by='timestamp') # ensuring order is oldest-to-newest date
 
 # Merge views and clones dataframes with the full date range
 merged_viewsclones = pd.merge(date_df, views_df, on='timestamp', how='left')
