@@ -2,7 +2,7 @@ name: Repo Data & figures
 
 on:
   schedule:
-    - cron: '15 22 * * *' # Runs 1st, 11th, and 21st of every month 0 0 1,11,21 * *
+    - cron: '0 0 1,11,21 * *' # Runs 1st, 11th, and 21st of every month
   workflow_dispatch:
 
 jobs:
