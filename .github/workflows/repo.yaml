@@ -38,7 +38,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: output-files
-        path: output/*
+        path: git_traffic/output/*
 
     - name: Config Git
       run: |
@@ -51,7 +51,7 @@ jobs:
 
     - name: Add files
       run: |
-        git add output/*
+        git add git_traffic/output/*
         git status
 
     - name: Commit files
