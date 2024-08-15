@@ -48,8 +48,8 @@ jobs:
         git commit -m "Add generated files to output directory" || echo "No changes to commit"
       continue-on-error: true
 
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.REPO_A_ACCESS_TOKEN }}
-        force: true
+    - name: Force push changes # This way files are always updated
+      run: |
+        git push origin main --force
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_A_ACCESS_TOKEN }}
