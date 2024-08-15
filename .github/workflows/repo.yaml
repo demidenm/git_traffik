@@ -28,7 +28,7 @@ jobs:
         REPO: 'PyReliMRI'  # GitHub repo name
         MY_ACCESS_TOKEN: ${{ secrets.REPO_A_ACCESS_TOKEN }} # Settings -> Secrets and variables -> Actions -> New Repository secret
       run: |
-        python scripts/repo_check-traffic.py
+        python git_traffic/repo_check-traffic.py
 
     - name: List files in output directory
       run: |
@@ -49,10 +49,6 @@ jobs:
       run: |
         git status
 
-    - name: Check staged files
-      run: |
-        git diff --cached
-
     - name: Add files
       run: |
         git add output/*
@@ -63,7 +59,7 @@ jobs:
         git commit -m "Add generated files to output directory" || echo "No changes to commit"
       continue-on-error: true
 
-    - name: Force push changes # This way files are always updated
+    - name: Force push changes # This way files are always updated if their hashes differ
       run: |
         git push origin main --force
       env:
