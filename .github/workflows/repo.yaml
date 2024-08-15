@@ -47,7 +47,7 @@ jobs:
       run: |
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
-        git add output/*
+        git add --all
         git commit -m "Add generated files to output directory" || echo "No changes to commit"
       continue-on-error: true
 
