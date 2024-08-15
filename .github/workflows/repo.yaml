@@ -23,13 +23,12 @@ jobs:
         pip install requests pandas matplotlib seaborn
 
     - name: Run script
-      working-directory: ./scripts  # Set working directory
       env:
         OWNER: 'demidenm'  # GitHub repo owner
         REPO: 'PyReliMRI'  # GitHub repo name
         MY_ACCESS_TOKEN: ${{ secrets.REPO_A_ACCESS_TOKEN }} # Settings -> Secrets and variables -> Actions -> New Repository secret
       run: |
-        python repo_check-traffic.py
+        python scripts/repo_check-traffic.py
 
     - name: List files in output directory
       run: |
@@ -47,7 +46,7 @@ jobs:
       run: |
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
-        git add --all
+        git add output/*
         git commit -m "Add generated files to output directory" || echo "No changes to commit"
       continue-on-error: true
 
