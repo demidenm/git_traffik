@@ -12,7 +12,7 @@ repo = os.getenv('REPO')
 token = os.getenv('MY_ACCESS_TOKEN')
 
 # Define the output directory and CSV file path
-output_dir = 'git_traffic/output'
+output_dir = 'git_traffik/output'
 csv_file = os.path.join(output_dir, f'{repo}_git-trafficdata.csv')
 
 views_url = f'https://api.github.com/repos/{owner}/{repo}/traffic/views'
