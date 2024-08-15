@@ -38,9 +38,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: output-files
-        path: |
-          output/PyReliMRI_git-trafficdata.csv
-          output/PyReliMRI_traffic-data.png
+        path: output/*
 
     - name: Commit files
       run: |
