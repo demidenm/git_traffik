@@ -44,47 +44,42 @@ else:
 views_data = get_data(views_url)
 clones_data = get_data(clones_url)
 
-# Convert views data to DataFrame and merge/update traffic_df
-# Convert views data to DataFrame and process
+# Convert views data & clones data to pandas df and them process
 views_df = pd.DataFrame(views_data['views'])
-views_df['timestamp'] = pd.to_datetime(views_df['timestamp'])
+views_df['timestamp'] = pd.to_datetime(views_df['timestamp']).dt.tz_convert('UTC')
 views_df = views_df.rename(columns={'count': 'views_count', 'uniques': 'views_uniques'})
-
-# Convert clones data to DataFrame and process
 clones_df = pd.DataFrame(clones_data['clones'])
-clones_df['timestamp'] = pd.to_datetime(clones_df['timestamp'])
+clones_df['timestamp'] = pd.to_datetime(clones_df['timestamp']).dt.tz_convert('UTC')
 clones_df = clones_df.rename(columns={'count': 'clones_count', 'uniques': 'clones_uniques'})
 
-# create date full range, so if git has zeros for clones/views, it retains those as zeros
-start_date = min(views_df['timestamp'].min(), clones_df['timestamp'].min()).tz_convert('UTC')
+# Create a full date range from the earliest to the current date
+start_date = min(views_df['timestamp'].min(), clones_df['timestamp'].min())
 end_date = pd.Timestamp.now(tz='UTC')
-full_date_range = pd.date_range(start=start_date, end=end_date)
+full_date_range = pd.date_range(start=start_date, end=end_date, tz='UTC')
 
 # Create a DataFrame with the full date range
 date_df = pd.DataFrame({'timestamp': full_date_range})
-date_df = date_df.sort_values(by='timestamp') # ensuring order is oldest-to-newest date
 
-# Merge views and clones dataframes with the full date range
+# Merge views and clones dataframes with the full date range, Fill NA values with zeros
 merged_viewsclones = pd.merge(date_df, views_df, on='timestamp', how='left')
 merged_viewsclones = pd.merge(merged_viewsclones, clones_df, on='timestamp', how='left')
 
-# Fill NA values with zeros
 merged_viewsclones = merged_viewsclones.fillna(0)
 
-# Convert timestamp to string and retain only the date part
+# Sort by date (old-to-new), Convert timestamp to string and retain only the date part & reset index
+merged_viewsclones = merged_viewsclones.sort_values(by='timestamp')
 merged_viewsclones['timestamp'] = merged_viewsclones['timestamp'].astype(str).str.split(' ').str[0]
+merged_viewsclones = merged_viewsclones.reset_index(drop=True)
 
 # Combine with the existing traffic_df
 concatenated_df = pd.concat([traffic_df, merged_viewsclones], ignore_index=True)
 uniq_df = concatenated_df.drop_duplicates(subset=['timestamp'])
 
-# Save the updated DataFrame to CSV
 print(f"Saving CSV to: {csv_file}")
 uniq_df.to_csv(csv_file, index=False)
 
 
 # Create plots
-
 # Set Seaborn style and context
 sns.set(style='whitegrid', rc={"axes.labelsize": 14, "xtick.labelsize": 11, "ytick.labelsize": 11})
 
