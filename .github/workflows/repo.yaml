@@ -32,7 +32,7 @@ jobs:
 
     - name: List files in output directory
       run: |
-        ls -alh output/
+        ls -alh git_traffik/output/
 
     - name: Upload output files
       uses: actions/upload-artifact@v4

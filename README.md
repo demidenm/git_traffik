@@ -8,12 +8,12 @@
 ## How Does it work
 
 [.github/workflows/repo.yaml](.github/workflows/repo.yaml): 
-Includes information for repository name [`REPO`], repo's owner [`OWNER`],
-and the API key, [personal token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token), /
+Includes information for repository name [`REPO`], repo's owner [`OWNER`], 
+and the API key, [personal token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token), 
 that provides access to read/write/pull/push to repository [`MY_ACCESS_TOKEN`]. Note, this token is stored as a [SECRET KEY](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) for security.
 
 
-To run, you either clone this repository and update the yaml, `.github/workflows/repo.yaml` with your information and 
+To run, you either clone this repository and update the yaml, `.github/workflows/repo.yaml` with your information and monitor the actions. 
 ![Example PyReliMRI Traffic Data Plot](./git_traffik/output/PyReliMRI_traffic-data.png)
 
 ## Basics of git_traffic repo
