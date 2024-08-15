@@ -8,7 +8,7 @@ Thus, if you want anything beyond 14-days, you need to hook up your package a th
 
 ## Basics of git_traffic repo
 
-[.github/workflows/repo.yaml](github/workflows/repo.yaml):
+[./.github/workflows/repo.yaml](github/workflows/repo.yaml):
 
 This YAML file defines a GitHub Actions workflow named "Repo Data & figures" that performs the following tasks:
 
