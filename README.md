@@ -7,7 +7,7 @@
 
 ## How Does it Work?
 
-### 1. Running it via a cloned `git_traffik` repo.
+### 1. Running it via cloned `git_traffik` repo.
 
 [.github/workflows/repo.yaml](.github/workflows/repo.yaml):  
 Includes fields for repository name [`REPO`], repository owner [`OWNER`], and the API key, [personal token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).  
@@ -48,7 +48,7 @@ You can download and/or view the compiled data in the .csv file or as an image:
 1. For the code to work, the token should have repository privileges.
 2. For the code to run, ensure the repo where actions are being performed (e.g., `git_traffik`) has Settings → Actions → General → Workflow Permissions set to _Read and write permissions_.
 
-### 2. Running it within your package/software repo
+### 2. Running Git Traffik within your package/software repo with & without tokens
 
 To run `git_traffik` within your package repo, copy the `git_traffik` folder to the root directory and place the `.github/workflows/repo.yaml` file in your `.github/workflows` folder. As with #1, update the repo details in the .yaml file and insert the two secret keys with your personal token.  
 <div style="text-align: center;">
@@ -58,13 +58,18 @@ To run `git_traffik` within your package repo, copy the `git_traffik` folder to 
   <img src="./images/git_token.png" alt="git token info" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
 </div>
 
+**Skip the secret key!** When the workflow & code is copied directly within your Github repository, you can skip the creation of the secret key by adding `{{ secrets.GITHUB_TOKEN }}`. In others works, in **repo.yaml**:
+`MY_ACCESS_TOKEN: ${{ secrets.REPO_A_ACCESS_TOKEN }}` --> `MY_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}`
+
+For more details, see [automatic authentication](https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication).
+
 
 **Note:**
 
 1. For the code to work, the token should have repository privileges.
 2. For the code to run, ensure the repo where actions are being performed (e.g., `<repo_name>`) has Settings → Actions → General → Workflow Permissions set to _Read and write permissions_.
 
-### 3. Running it locally on your machine
+### 3. Running Git Traffik locally on your machine
 
 To run it locally, you will only need the [./git_traffik/repo_check_traffic.py](./git_traffik/repo_check_traffic.py) script. Since it is running locally, you can avoid secret keys, but you will still need a [personal token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with repo permissions. Update the owner, repo, and token information with your own:
 
