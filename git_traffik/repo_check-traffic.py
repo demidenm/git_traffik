@@ -81,32 +81,34 @@ uniq_df.to_csv(csv_file, index=False)
 
 # Create plots
 # Set Seaborn style and context
-sns.set(style='whitegrid', rc={"axes.labelsize": 14, "xtick.labelsize": 11, "ytick.labelsize": 11})
+sns.set(style='whitegrid', context='talk', rc={"axes.labelsize": 14, "xtick.labelsize": 12, "ytick.labelsize": 12})
 
 # Create a figure with subplots
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(14, 10))
 
 # Plot views_count and views_uniques
 plt.subplot(2, 1, 1)
-plt.plot(uniq_df['timestamp'], uniq_df['views_count'], label='Views Count')
-plt.plot(uniq_df['timestamp'], uniq_df['views_uniques'], label='Views Uniques')
-plt.title('Views Count and Uniques Over Time', fontsize=16)
-plt.xlabel('Timestamp', fontsize=14)
+plt.plot(uniq_df['timestamp'], uniq_df['views_count'], label='Views Count', linewidth=2.5, linestyle='-', color=sns.color_palette('muted')[0])
+plt.plot(uniq_df['timestamp'], uniq_df['views_uniques'], label='Views Uniques', linewidth=2.5, linestyle='--', color=sns.color_palette('muted')[1])
+plt.title('Views Count and Uniques Over Time', fontsize=18)
+plt.xlabel('Date', fontsize=14)
 plt.ylabel('Count', fontsize=14)
-plt.xticks(rotation=90)
-plt.legend()
+plt.xticks(rotation=45)
+plt.legend(fontsize=12, loc='upper left')
+plt.grid(True, linestyle='--', alpha=0.7)
 
 # Plot clones_count and clones_uniques
 plt.subplot(2, 1, 2)
-plt.plot(uniq_df['timestamp'], uniq_df['clones_count'], label='Clones Count')
-plt.plot(uniq_df['timestamp'], uniq_df['clones_uniques'], label='Clones Uniques')
-plt.title('Clones Count and Uniques Over Time', fontsize=16)
-plt.xlabel('Timestamp', fontsize=14)
+plt.plot(uniq_df['timestamp'], uniq_df['clones_count'], label='Clones Count', linewidth=2.5, linestyle='-', color=sns.color_palette('muted')[2])
+plt.plot(uniq_df['timestamp'], uniq_df['clones_uniques'], label='Clones Uniques', linewidth=2.5, linestyle='--', color=sns.color_palette('muted')[3])
+plt.title('Clones Count and Uniques Over Time', fontsize=18)
+plt.xlabel('Date', fontsize=14)
 plt.ylabel('Count', fontsize=14)
-plt.xticks(rotation=90)
-plt.legend()
+plt.xticks(rotation=45)
+plt.legend(fontsize=12, loc='upper left')
+plt.grid(True, linestyle='--', alpha=0.7)
 
-# Save plot
+# Improve layout and save plot
 plt.tight_layout()
 plot_path = os.path.join(output_dir, f'{repo}_traffic-data.png')
 plt.savefig(plot_path, dpi=300)
