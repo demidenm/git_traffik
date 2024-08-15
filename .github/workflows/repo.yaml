@@ -47,9 +47,8 @@ jobs:
       run: |
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
-        git add output/PyReliMRI_git-trafficdata.csv
-        git add output/PyReliMRI_traffic-data.png
-        git commit -m "Add generated CSV and PNG files"
+        git add output/*
+        git commit -m "Add generated files to output directory" || echo "No changes to commit"
       continue-on-error: true
 
     - name: Push changes
