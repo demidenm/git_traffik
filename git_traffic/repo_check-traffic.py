@@ -55,9 +55,9 @@ clones_df = pd.DataFrame(clones_data['clones'])
 clones_df['timestamp'] = pd.to_datetime(clones_df['timestamp'])
 clones_df = clones_df.rename(columns={'count': 'clones_count', 'uniques': 'clones_uniques'})
 
-# Determine the full date range
-start_date = min(views_df['timestamp'].min(), clones_df['timestamp'].min())
-end_date = pd.Timestamp.now()
+# create date full range, so if git has zeros for clones/views, it retains those as zeros 
+start_date = min(views_df['timestamp'].min(), clones_df['timestamp'].min()).tz_convert('UTC')
+end_date = pd.Timestamp.now(tz='UTC')
 full_date_range = pd.date_range(start=start_date, end=end_date)
 
 # Create a DataFrame with the full date range
