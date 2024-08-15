@@ -21,7 +21,7 @@ Job: update-data runs on a ubuntu and includes these steps:
 - Install Dependencies: in  [./git_traffic/repo_check_trafic.py](./git_traffic/repo_check_trafic.py) such as requests, pandas, matplotlib, seaborn).
 - Runs Script to gather data and generate figures.
   - Fetches GitHub repository traffic data & creates visuals
-    - Setup: Configures owner, repo name and person access token based on [repo.yaml](github/workflows/repo.yaml) file.
+    - **Setup: Configures owner, repo name and person access token based on [repo.yaml](.github/workflows/repo.yaml) file**.
     - Data Retrieval: fetches views and clones data from GitHub API. Converts data to DataFrames and merges clones/views data. Keeps only unique dates and does not include dates when both clones/views are 0. Ensures unique timestamps and fills missing values.
     - If output/.csv alread exists it updates that data, else creates a CSV file with the traffic data.
     - Generates plots for views and clones over time in a two-panel figure 
