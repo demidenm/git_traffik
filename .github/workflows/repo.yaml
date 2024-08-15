@@ -40,11 +40,22 @@ jobs:
         name: output-files
         path: output/*
 
-    - name: Commit files
+    - name: Config Git
       run: |
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
+
+    - name: Check git status
+      run: |
+        git status
+
+    - name: Add files
+      run: |
         git add output/*
+        git status
+
+    - name: Commit files
+      run: |
         git commit -m "Add generated files to output directory" || echo "No changes to commit"
       continue-on-error: true
 
