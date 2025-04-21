@@ -110,6 +110,7 @@ merged_viewsclones = merged_viewsclones.reset_index(drop=True)
 # Combine with the existing traffic_df (if one existed)
 concatenated_df = pd.concat([traffic_df, merged_viewsclones], ignore_index=True)
 uniq_df = concatenated_df.drop_duplicates(subset=['timestamp'])
+uniq_df['timestamp'] = pd.to_datetime(uniq_df['timestamp'], errors='coerce')
 
 print(f"Saving CSV to: {csv_file}")
 uniq_df.to_csv(csv_file, index=False)
