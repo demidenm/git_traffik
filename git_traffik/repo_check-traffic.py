@@ -116,10 +116,12 @@ uniq_df.to_csv(csv_file, index=False)
 
 
 # Create plots
-# Set Seaborn style and context
-sns.set(style='whitegrid', context='talk', rc={"axes.labelsize": 14, "xtick.labelsize": 12, "ytick.labelsize": 12})
+# spacing for x-axis ticks -- at large n things overcrowd
+data_length = len(uniq_df)
+tick_interval = max(1, data_length // 10)  # lower value more tick labels
 
-# Create a figure with subplots
+# Create plots
+sns.set(style='whitegrid', context='talk', rc={"axes.labelsize": 14, "xtick.labelsize": 12, "ytick.labelsize": 12})
 plt.figure(figsize=(14, 10))
 
 # Plot views_count and views_uniques
@@ -129,7 +131,7 @@ plt.plot(uniq_df['timestamp'], uniq_df['views_uniques'], label='Views Uniques', 
 plt.title('Views Count and Uniques Over Time', fontsize=18)
 plt.xlabel('Date', fontsize=14)
 plt.ylabel('Count', fontsize=14)
-plt.xticks(rotation=45)
+plt.xticks(ticks=uniq_df.index[::tick_interval], labels=uniq_df['timestamp'].dt.strftime('%Y-%m-%d').iloc[::tick_interval], rotation=90)
 plt.legend(fontsize=12, loc='upper left')
 plt.grid(True, linestyle='--', alpha=0.7)
 
@@ -140,7 +142,7 @@ plt.plot(uniq_df['timestamp'], uniq_df['clones_uniques'], label='Clones Uniques'
 plt.title('Clones Count and Uniques Over Time', fontsize=18)
 plt.xlabel('Date', fontsize=14)
 plt.ylabel('Count', fontsize=14)
-plt.xticks(rotation=45)
+plt.xticks(ticks=uniq_df.index[::tick_interval], labels=uniq_df['timestamp'].dt.strftime('%Y-%m-%d').iloc[::tick_interval], rotation=90)
 plt.legend(fontsize=12, loc='upper left')
 plt.grid(True, linestyle='--', alpha=0.7)
 
