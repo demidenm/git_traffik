@@ -1,120 +1,195 @@
-# git traffik
+# git_traffik 📊
 
-**Situation**: GitHub [Insights → Traffic data](https://docs.github.com/en/repositories/viewing-activity-and-data-for-your-repository/viewing-traffic-to-a-repository) only offers 14 days of visit/clone data.  
-**Task**: A workflow is needed to access the repository every 10-14 days to pull the data and store it, retaining and expanding visitor/clone history.  
-**Action**: `git_traffic` is a simple workflow that can be integrated directly within a repository, run in a separate repository to track another repo, or run locally.  
-**Result**: Historical data >14 days in .csv format and visualized automatically for any repo.
+**Extract & Plot Git Repo Clones/Views Beyond 14-day Insights**
 
-## How Does it Work?
+**Problem**: GitHub [Insights → Traffic data](https://docs.github.com/en/repositories/viewing-activity-and-data-for-your-repository/viewing-traffic-to-a-repository) only offers 14 days of visit/clone data.  
+**Solution**: `git_traffik` automatically collects and stores your repository's traffic data every 10-14 days, building historical datasets beyond GitHub's limit.  
+**Result**: Continuous historical data in CSV format + automated visualizations for any repository.
 
-### 1. Running it via cloned `git_traffik` repo.
-
-[.github/workflows/repo.yaml](.github/workflows/repo.yaml):  
-Includes fields for repository name [`REPO`], repository owner [`OWNER`], and the API key, [personal token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).  
-The token provides read/write/pull/push access to the repository [`MY_ACCESS_TOKEN`]. The token is stored as a [SECRET KEY](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) for security.
-
-To run, clone this repository and update the `.github/workflows/repo.yaml` file with your information, then monitor the actions.  
-<div style="text-align: center;">
-  <img src="./images/repo_info.png" alt="repo info location" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+<div align="center">
+  <img src="./git_traffik/output/PyReliMRI_traffic-data.png" alt="Example Traffic Data Visualization" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </div>
 
-You can, at any time, manually trigger the workflow.  
-<div style="text-align: center;">
-  <img src="./images/git_actions.png" alt="Workflow actions example" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+## Setup
+
+Choose your preferred method:
+
+| Method | Use Case | 
+|--------|----------|
+| [**Standalone Repo**](#1-standalone-repository-recommended) | Track any repository | 
+| [**Within Your Repo**](#2-integrate-within-your-repository) | Track the same repository | 
+| [**Local Execution**](#3-run-locally) | Manual control & scheduling | 
+
+---
+
+## 1. Standalone Repository (Recommended)
+
+**Best for**: Tracking any repository from a dedicated monitoring repo.
+
+### Setup Steps:
+
+1. **Get the code**: Fork this repository or clone it locally
+2. **Configure repository details** in [`.github/workflows/repo.yaml`](.github/workflows/repo.yaml):
+
+<div align="center">
+  <img src="./images/repo_info.png" alt="Repository configuration" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </div>
 
-You can also modify the [cron schedule](https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html).  
-<div style="text-align: center;">
-  <img src="./images/cron_schedule.png" alt="cron schedule" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+3. **Create access token**: Generate a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with repository permissions
+
+4. **Add secret**: Go to Settings → Secrets & Variables → Actions, create `REPO_A_ACCESS_TOKEN` with your token
+
+5. **Enable permissions**: Settings → Actions → General → Workflow Permissions → **"Read and write permissions"**
+
+### Usage:
+- **Manual trigger**: Run anytime from Actions tab
+- **Automatic**: Runs on 1st, 11th, and 21st of each month
+- **Customize schedule**: Modify the [cron schedule](https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html)
+
+<div align="center">
+  <img src="./images/git_actions.png" alt="GitHub Actions workflow" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </div>
 
-When a workflow is completed, it will indicate this with a green checkmark. You can review the steps within it for specific details. Set up some manual and automated (timed) tests to ensure everything is working.  
-<div style="text-align: center;">
-  <img src="./images/workflow_completion.png" alt="Workflow complete example" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+<div align="center">
+  <img src="./images/cron_schedule.png" alt="Cron schedule configuration" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </div>
 
-The results will then be populated in the `./git_traffik/output` folder for the given repo in .csv and .png formats.  
-<div style="text-align: center;">
-  <img src="./images/results_example.png" alt="results output example" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+---
+
+## 2. Integrate Within Your Repository
+
+**Best for**: Tracking the same repository where the code lives.
+
+### Setup Steps:
+
+1. **Copy files** to your repository:
+   - Copy `git_traffik/` folder to your repo root
+   - Copy `.github/workflows/repo.yaml` to `.github/workflows/`
+
+2. **Simplify authentication** - Update `repo.yaml`:
+   ```yaml
+   # Change this:
+   MY_ACCESS_TOKEN: ${{ secrets.REPO_A_ACCESS_TOKEN }}
+   # To this:
+   MY_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   ```
+
+3. **Enable permissions**: Settings → Actions → General → Workflow Permissions → **"Read and write permissions"**
+
+**Benefit**: No need to create personal access tokens! Uses GitHub's [automatic authentication](https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication).
+
+<div align="center">
+  <img src="./images/git_token.png" alt="Token configuration" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </div>
 
-You can download and/or view the compiled data in the .csv file or as an image:  
-<div style="text-align: center;">
-  <img src="./git_traffik/output/PyReliMRI_traffic-data.png" alt="Example PyReliMRI Traffic Data Plot" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+---
+
+## 3. Run Locally
+
+**Best for**: Manual control or custom scheduling on your machine.
+
+### Setup Steps:
+
+1. **Download script**: Get [`./git_traffik/repo_check_traffic.py`](./git_traffik/repo_check_traffic.py)
+
+2. **Install dependencies**:
+   ```bash
+   pip install requests pandas matplotlib seaborn
+   ```
+
+3. **Configure script**: Update owner, repo, and token variables:
+
+<div align="center">
+  <img src="./images/git-traffik_local.png" alt="Local configuration" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </div>
 
-**Note:**
+4. **Run manually** or **set up cron job** using [crontab](https://phoenixnap.com/kb/cron-job-mac)
 
-1. For the code to work, the token should have repository privileges.
-2. For the code to run, ensure the repo where actions are being performed (e.g., `git_traffik`) has Settings → Actions → General → Workflow Permissions set to _Read and write permissions_.
+---
 
-### 2. Running Git Traffik within your package/software repo with & without tokens
+## What You Get
 
-To run `git_traffik` within your package repo, copy the `git_traffik` folder to the root directory and place the `.github/workflows/repo.yaml` file in your `.github/workflows` folder. As with #1, update the repo details in the .yaml file and insert the two secret keys with your personal token.  
-<div style="text-align: center;">
-  <img src="./images/repo_info.png" alt="repo info location" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
-</div>
-<div style="text-align: center;">
-  <img src="./images/git_token.png" alt="git token info" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
-</div>
+### Automated Data Collection
+- **CSV files**: Complete historical traffic data
+- 📊 **PNG visualizations**: Two-panel plots (views + clones over time)
+- **Regular updates**: Scheduled collection every ~10 days
 
-**Skip the secret key!** When the workflow & code is copied directly within your Github repository, you can skip the creation of the secret key by adding `{{ secrets.GITHUB_TOKEN }}`. In others works, in **repo.yaml**:
-`MY_ACCESS_TOKEN: ${{ secrets.REPO_A_ACCESS_TOKEN }}` --> `MY_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}`
+### Output Location
+Results appear in `./git_traffik/output/`:
+- `{REPO_NAME}_git-trafficdata.csv`
+- `{REPO_NAME}_traffic-data.png`
 
-For more details, see [automatic authentication](https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication).
-
-
-**Note:**
-
-1. For the code to work, the token should have repository privileges.
-2. For the code to run, ensure the repo where actions are being performed (e.g., `<repo_name>`) has Settings → Actions → General → Workflow Permissions set to _Read and write permissions_.
-
-### 3. Running Git Traffik locally on your machine
-
-To run it locally, you will only need the [./git_traffik/repo_check_traffic.py](./git_traffik/repo_check_traffic.py) script. Since it is running locally, you can avoid secret keys, but you will still need a [personal token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with repo permissions. Update the owner, repo, and token information with your own:
-
-<div style="text-align: center;">
-  <img src="./images/git-traffik_local.png" alt="local run updates" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0px 8px 12px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0px 4px 6px rgba(0, 0, 0, 0.1)';"/>
+<div align="center">
+  <img src="./images/results_example.png" alt="Output examples" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </div>
 
-Then, either run the Python script to generate the data or write a bash script to call the Python code. If your machine is on most days of the week, you can set a schedule using [crontab](https://phoenixnap.com/kb/cron-job-mac) to run it on a set schedule. Test to ensure it works.
+<div align="center">
+  <img src="./images/workflow_completion.png" alt="Successful workflow" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+</div>
 
-## More Specific Details of the Code
+---
 
-[.github/workflows/repo.yaml](.github/workflows/repo.yaml):
+## Technical Details
 
-This YAML file defines a GitHub Actions workflow named "Repo Data & Figures" that performs the following tasks:
+### Workflow Process
+The [GitHub Actions workflow](.github/workflows/repo.yaml) automatically:
 
-- **Schedule/Trigger**: Runs on the 1st, 11th, and 21st of every month at midnight (UTC) & can be triggered manually. It uses [cron syntax](https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html).
-- **Job**: `update-data` runs on Ubuntu and includes these steps:
-  - **Checkout Code**: Retrieves the repository code within `git_traffik`.
-  - **Setup Python**: Configures Python 3.9.
-  - **Install Dependencies**: Installs dependencies in [./git_traffik/repo_check_traffic.py](./git_traffik/repo_check_traffic.py), such as `requests`, `pandas`, `matplotlib`, and `seaborn`.
-  - **Run Script**: Gathers data and generates figures:
-    - **Setup**: Configures owner, repo name, and personal access token based on the [repo.yaml](.github/workflows/repo.yaml) file.
-    - **Data Retrieval**: Fetches views and clones data from the GitHub API. Converts data to DataFrames and merges clones/views data. Keeps only unique dates and excludes dates when both clones/views are 0. Ensures unique timestamps and fills missing values.
-    - **CSV Handling**: Updates the existing .csv file if present; otherwise, creates a new .csv file with the traffic data.
-    - **Plotting**: Generates plots for views and clones over time in a two-panel figure.
-    - **Saving**: Saves the plots as .csv and PNG files.
-  - **List Files**: Displays the contents generated in the output directory.
-  - **Upload Output Files**: Uploads output files from the output directory as artifacts (saved as a .zip for each workflow).
-  - **Configure Git**: Configures Git using a generic username and email.
-  - **Check Git Status**: Checks the repository for changes (if hashes are identical, no changes).
-  - **Add Files**: Stages output files for commit to the [./output/](./output/) directory.
-  - **Commit Files**: Commits files with a message if any changes exist.
+1. **Fetches** current 14-day traffic data via GitHub API
+2. **Merges** with existing historical data (if any)
+3. **Cleans** data: removes duplicates, filters zero-traffic days
+4. **Generates** updated CSV and visualization files
+5. **Commits** results back to repository
+6. **Uploads** artifacts for easy download
 
-This workflow ensures that data and figures are updated regularly and consistently in the repository.
+### Dependencies
+- `requests` - GitHub API communication  
+- `pandas` - Data manipulation and CSV handling
+- `matplotlib` & `seaborn` - Traffic visualization
 
-## Example Using [PyReliMRI](https://github.com/demidenm/PyReliMRI) Package
+### Schedule Configuration
+Default: `'0 0 1,11,21 * *'` (1st, 11th, 21st of each month at midnight UTC)
 
-I created a small package that I wanted to observe the fluctuations in usage. It helps me determine whether people are using it and if I should consider maintaining and expanding it. Unfortunately, I discovered very quickly that the first 4-5 months of data were lost. I needed something more consistent.
+Customize in `.github/workflows/repo.yaml` using [cron syntax](https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html).
 
-### Essentials to Update in [repo.yaml](.github/workflows/repo.yaml)
+---
 
-These are called as variables into the .py code for use with the API:
+## Real-World Example
 
-- **OWNER**: Update the GitHub repository owner to your name or whoever has access and has granted you repo privileges.
-- **REPO**: Update the repository name (in my case, it is `PyReliMRI`).
-- **MY_ACCESS_TOKEN**: This is the token to access the data, and it needs to be private. In the `repo_trafficplots` repo, go to Settings → Secrets & Variables → Actions and create a [New Repository Secret](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) with your Personal Token. You can create one for yourself by following these [instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
+I created this tool for my [PyReliMRI](https://github.com/demidenm/PyReliMRI) package to:
+- **Track adoption**: Monitor if people are actually using the package
+- **Inform decisions**: Determine if continued maintenance/expansion is worthwhile  
+- **Prevent data loss**: Unfortunately, I lost 4-5 months of early data before implementing this!
 
-Once this is set up, the Actions are triggered via the event trigger (cron details). You can review all runs and the associated logs. When the figures are created, they are updated in [./git_traffik/output/](./git_traffik/output/). The figure below is compiled based on the [running data](./git_traffik/output/PyReliMRI_git-trafficdata.csv).
+The [current dataset](./git_traffik/output/PyReliMRI_git-trafficdata.csv) shows clear usage patterns that help guide development priorities.
+
+---
+
+## Troubleshooting
+
+### Common Issues
+- **"Workflow failed"** → Check token permissions (needs repository access)
+- **"Permission denied"** → Enable "Read and write permissions" in Actions settings  
+- **"No data collected"** → Verify repository name/owner in workflow file
+- **"Schedule not working"** → Remember GitHub Actions use UTC time
+
+### Quick Fixes
+- **Manual trigger**: Use "Run workflow" button in Actions tab for testing
+- **Check logs**: Click on failed workflow runs to see detailed error messages
+- **Validate token**: Ensure your personal access token hasn't expired
+
+---
+
+## Contributing
+
+Found this useful? Consider:
+- **Starring** this repository
+- **Reporting issues** you encounter  
+- **Suggesting improvements** 
+
+## License
+
+MIT License - use freely for your projects!
+
+---
+
+**Stop losing your GitHub traffic data!** Set up git_traffik in under 5 minutes. 
